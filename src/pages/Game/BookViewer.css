@@ -1,0 +1,188 @@
+.book-viewer {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.book-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.book-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary, #FF6B9D);
+    margin: 0 0 8px 0;
+}
+
+.book-subtitle {
+    font-size: 16px;
+    color: var(--text-muted, #aaa);
+    margin: 0;
+}
+
+.book-content {
+    background: var(--surface, #111);
+    border: 3px solid var(--border, #333);
+    border-radius: var(--radius-lg, 24px);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+/* Fix container size stability */
+.page-container {
+    width: 100%;
+    aspect-ratio: 3/2;
+    /* Widescreen canvas ratio */
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    background: var(--surface-light, #1a1a1a);
+    border-radius: var(--radius-md, 12px);
+    overflow: hidden;
+}
+
+/* Ensure canvas takes full space */
+.page-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+}
+
+.page-word,
+.page-guess,
+.page-draw {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.word-display {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--primary, #FF6B9D);
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255, 107, 157, 0.1);
+    border-radius: var(--radius-md, 12px);
+    border: 2px dashed var(--primary, #FF6B9D);
+    flex: 1;
+    /* Fill height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guess-display {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--secondary, #4ECDC4);
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(78, 205, 196, 0.1);
+    border-radius: var(--radius-md, 12px);
+    border: 2px solid var(--secondary, #4ECDC4);
+    flex: 1;
+    /* Fill height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ... existing nav styles ... */
+
+.page-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.nav-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    background: var(--surface-light, #222);
+    /* More subtle nav buttons */
+    color: #fff;
+    border: 2px solid var(--border, #333);
+    border-radius: var(--radius-md, 12px);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 100px;
+    touch-action: manipulation;
+}
+
+.nav-btn:hover:not(:disabled) {
+    border-color: var(--primary, #FF6B9D);
+    background: var(--surface-lighter, #333);
+}
+
+.final-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.action-btn {
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-md, 12px);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.action-btn.share {
+    background: var(--secondary, #4ECDC4);
+    color: #000;
+}
+
+.action-btn.home {
+    background: var(--primary, #FF6B9D);
+    color: #000;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .book-viewer {
+        padding: 20px 20px 100px 20px;
+        /* Extra padding for bottom */
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .page-container {
+        aspect-ratio: 1/1;
+        /* Square on mobile */
+        min-height: 300px;
+    }
+
+    .final-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .page-counter {
+        display: none;
+    }
+}

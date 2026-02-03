@@ -1,0 +1,400 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    background: var(--color-bg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.headerTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.backBtn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.appTitle {
+    color: var(--color-primary);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+}
+
+.roomInfo {
+    text-align: center;
+}
+
+.hostTitle {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.codeRow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: var(--color-surface);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+    min-height: 60px;
+    /* larger tap target */
+    transition: transform 0.2s;
+}
+
+.codeRow:active {
+    transform: scale(0.98);
+}
+
+.waitingText {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-style: italic;
+    padding: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-md);
+}
+
+.codeLabel {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+.roomCode {
+    color: var(--color-secondary);
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+}
+
+.qrIcon {
+    font-size: 1.5rem;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding-bottom: 200px;
+    /* Space for sticky footer */
+}
+
+.playerList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    background: var(--color-surface);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+}
+
+.player.ready {
+    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary), transparent 90%);
+}
+
+.name {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.settings {
+    background: var(--color-surface);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-top: auto;
+    /* Push to bottom of content if space permits */
+}
+
+.settingRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-sm);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-bg);
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    z-index: 100;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.readyBtn {
+    width: 100%;
+}
+
+.startBtn {
+    width: 100%;
+}
+
+.kickBtn {
+    background: transparent;
+    border: none;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: var(--spacing-sm);
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+    line-height: 1;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Team Styles */
+.teamGrid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.teamColumn {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.teamColumn.expanded {
+    border-color: var(--color-secondary);
+}
+
+.teamHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.teamActionBar {
+    padding: 0 var(--spacing-md) var(--spacing-sm);
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.chevron {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    width: 20px;
+}
+
+.teamName {
+    font-weight: 700;
+    color: var(--color-content);
+    font-size: 1.1rem;
+}
+
+.teamCount {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+.editBtn {
+    background: transparent;
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    font-weight: bold;
+}
+
+.joinTeamBtn {
+    font-size: 0.8rem;
+    padding: 4px 12px;
+    height: auto;
+}
+
+.code {
+    color: var(--color-secondary);
+    font-size: 3rem;
+    letter-spacing: 0.1em;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.playerList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.player {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm);
+    background: var(--color-surface);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+}
+
+.player.ready {
+    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary), transparent 90%);
+}
+
+.name {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.settings {
+    background: var(--color-surface);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+}
+
+.settingRow {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-sm);
+}
+
+.footer {
+    padding-top: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.readyBtn {
+    width: 100%;
+}
+
+.startBtn {
+    width: 100%;
+    margin-top: var(--spacing-sm);
+}
+
+.kickBtn {
+    background: transparent;
+    border: none;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: var(--spacing-sm);
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+    line-height: 1;
+    min-width: 44px;
+    /* Mobile touch target */
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kickBtn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.editBtn {
+    background: transparent;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    padding: 0 0.5rem;
+    transition: transform 0.2s;
+}
+
+.editBtn:hover {
+    transform: scale(1.1);
+}
+
+/* Team Styles */
+.teamGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.teamColumn {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.teamHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.teamName {
+    font-weight: 700;
+    color: var(--color-primary);
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--color-content);
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+.teamNameInput {
+    border: 1px solid var(--color-primary);
+    padding: 2px 4px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--color-bg), transparent 50%);
+}
+
+.joinTeamBtn {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    height: auto;
+}

@@ -1,0 +1,606 @@
+[
+    {
+        "word": "Cat",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Tree",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Sun",
+        "difficulty": "easy"
+    },
+    {
+        "word": "House",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Smile",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Car",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Pizza",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Rainbow",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Music Note",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Heart",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Star",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Cloud",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Flower",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Fish",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Moon",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Kite",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Butterfly",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Clock",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Boat",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Apple",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Bicycle",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Snowflake",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Book",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Pencil",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Cupcake",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Bird",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Train",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Key",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Balloon",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Chair",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Mountain",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Bridge",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Robot",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Hat",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Glasses",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Spider",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Turtle",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Snake",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Ghost",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Flag",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Ladder",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Candle",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Drum",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Camera",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Telephone",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Mushroom",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Cactus",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Rocket",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Planet",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Alien",
+        "difficulty": "easy"
+    },
+    {
+        "word": "Pirate Ship",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Astronaut",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Birthday Cake",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Firefighter",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Hot Air Balloon",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Snowman",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Surfing",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Camping Trip",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Knight in Armor",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Treehouse",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Juggling",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Volcano Erupting",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Magic Trick",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Rock Concert",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Ice Cream Cone",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Telescope",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Beehive",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Rollercoaster",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Parachute",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Scuba Diving",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Helicopter",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Unicorn",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Dragon",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Mermaid",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Vampire",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Werewolf",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Zombie",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Traffic Jam",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Grocery Shopping",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Library",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Playground",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Picnic",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Baseball Game",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Swimming Pool",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Beach Day",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Haunted House",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Treasure Map",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Message in a Bottle",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Campfire",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Hiking",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Skiing",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Snowball Fight",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Building a Sandcastle",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Flying a Kite",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Walking the Dog",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Washing the Dishes",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Mowing the Lawn",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Submarine",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Spaceship",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Time Machine",
+        "difficulty": "medium"
+    },
+    {
+        "word": "Time Traveler",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Breaking the Ice",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Spilling the Beans",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Raining Cats and Dogs",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Piece of Cake",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Quantum Physics",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Identity Crisis",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Déjà Vu",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Procrastination",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Social Media Influencer",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Virtual Reality",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Climate Change",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Under the Weather",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Elephant in the Room",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Cold Shoulder",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Barking up the Wrong Tree",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Hit the Nail on the Head",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Beat Around the Bush",
+        "difficulty": "hard"
+    },
+    {
+        "word": "A Blessing in Disguise",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Cost an Arm and a Leg",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Curiosity Killed the Cat",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Don't Judge a Book by Its Cover",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Kill Two Birds with One Stone",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Let the Cat Out of the Bag",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Once in a Blue Moon",
+        "difficulty": "hard"
+    },
+    {
+        "word": "The Apple of My Eye",
+        "difficulty": "hard"
+    },
+    {
+        "word": "When Pigs Fly",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Existential Dread",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Stock Market Crash",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Cryptocurrency",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Artificial Intelligence",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Global Warming",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Political Debate",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Fakenews",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Conspiracy Theory",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Mandela Effect",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Parallel Universe",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Black Hole",
+        "difficulty": "hard"
+    },
+    {
+        "word": "String Theory",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Schrödinger's Cat",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Butterfly Effect",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Grandfather Paradox",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Uncanny Valley",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Photosynthesis",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Metamorphosis",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Ecosystem",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Evolution",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Civilization",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Democracy",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Philosophy",
+        "difficulty": "hard"
+    },
+    {
+        "word": "Psychology",
+        "difficulty": "hard"
+    }
+]

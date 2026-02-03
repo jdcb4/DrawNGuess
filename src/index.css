@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Syne:wght@400;700;800&display=swap');
+
+:root {
+  /* Typography */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+
+  /* Palette - Electric Minimalist */
+  --color-bg: #050505;
+  --color-surface: #111111;
+  --color-text-main: #f0f0f0;
+  --color-text-muted: #aaaaaa;
+  /* Improved contrast 4.5:1+ */
+  --color-border: #333333;
+  /* New variable per audit */
+
+  --color-primary: #D7FF00;
+  /* Acid Green */
+  --color-secondary: #00F0FF;
+  /* Cyan */
+  --color-accent: #FF0055;
+  /* Neon Pink */
+
+  /* Spacing & Layout */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+
+  /* Animation */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+button {
+  font-family: var(--font-display);
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+/* Utilities */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-sm);
+  width: 100%;
+}
+
+.full-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* UX Review: Chunky Inputs */
+input {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-main);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}

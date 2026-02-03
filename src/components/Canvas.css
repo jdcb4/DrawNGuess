@@ -1,0 +1,117 @@
+.canvas-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    touch-action: none;
+    user-select: none;
+}
+
+.canvas-container canvas {
+    width: 100%;
+    height: auto;
+    border: 3px solid var(--border, #333);
+    border-radius: var(--radius-md, 12px);
+    background: white;
+    cursor: crosshair;
+    display: block;
+    touch-action: none;
+}
+
+.canvas-container.readonly canvas {
+    cursor: default;
+    border-color: var(--primary, #FF6B9D);
+}
+
+.canvas-tools {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.tool-section {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tool-btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 2px solid var(--border, #333);
+    background: var(--surface, #111);
+    color: var(--text-main, #f0f0f0);
+    border-radius: var(--radius-md, 12px);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 100px;
+    touch-action: manipulation;
+}
+
+.tool-btn:active {
+    transform: scale(0.95);
+}
+
+.tool-btn.active {
+    background: var(--primary, #FF6B9D);
+    border-color: var(--primary, #FF6B9D);
+    color: #000;
+}
+
+.tool-btn:hover:not(.active) {
+    border-color: var(--text-muted, #aaa);
+}
+
+.clear-btn {
+    background: var(--accent, #FFE66D) !important;
+    border-color: var(--accent, #FFE66D) !important;
+    color: #000 !important;
+}
+
+.color-picker {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.color-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 3px solid var(--border, #333);
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0;
+    touch-action: manipulation;
+}
+
+.color-btn:active {
+    transform: scale(0.9);
+}
+
+.color-btn.active {
+    border-color: var(--primary, #FF6B9D);
+    border-width: 4px;
+    box-shadow: 0 0 0 2px var(--background, #050505);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .tool-btn {
+        padding: 14px 18px;
+        font-size: 14px;
+        min-width: 90px;
+    }
+
+    .color-btn {
+        width: 48px;
+        height: 48px;
+    }
+
+    .canvas-container {
+        padding: 0 8px;
+    }
+}

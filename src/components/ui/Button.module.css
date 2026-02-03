@@ -1,0 +1,81 @@
+.button {
+    position: relative;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    color: var(--color-bg);
+    overflow: hidden;
+    transition: transform 0.2s var(--ease-spring);
+    z-index: 1;
+    border: 2px solid transparent;
+}
+
+.button:active {
+    transform: scale(0.95);
+}
+
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: all 0.3s ease;
+}
+
+/* Variants */
+.primary {
+    color: var(--color-bg);
+}
+
+.primary .bg {
+    background: var(--color-primary);
+}
+
+.primary:hover .bg {
+    background: var(--color-text-main);
+}
+
+.secondary {
+    color: var(--color-bg);
+}
+
+.secondary .bg {
+    background: var(--color-secondary);
+}
+
+.danger {
+    background: var(--color-accent);
+    /* Per audit recommendation */
+    color: white;
+}
+
+.danger:hover {
+    filter: brightness(0.8);
+}
+
+.outline {
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.outline .bg {
+    background: transparent;
+}
+
+.outline:hover {
+    color: var(--color-bg);
+}
+
+.outline:hover .bg {
+    background: var(--color-primary);
+}
+
+/* Sizes */
+.lg {
+    font-size: 1.5rem;
+    padding: var(--spacing-md) var(--spacing-lg);
+}
