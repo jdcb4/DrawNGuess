@@ -1,15 +1,15 @@
 # ================================
-# Multi-stage Dockerfile for ImposterByJD
+# Multi-stage Dockerfile for DrawNGuess
 # Builds client (Vite/React) and server (Node.js/TypeScript)
 # ================================
 
 # ================================
 # Stage 1: Build Client (Frontend)
 # ================================
-FROM node:18-alpine AS client-builder
+FROM node:20-alpine AS client-builder
 
 # Build argument for production URL
-ARG VITE_API_URL=https://imposter.jboxtv.com
+ARG VITE_API_URL
 
 WORKDIR /app
 
@@ -36,7 +36,7 @@ RUN npm run build
 # ================================
 # Stage 2: Build Server (Backend)
 # ================================
-FROM node:18-alpine AS server-builder
+FROM node:20-alpine AS server-builder
 
 WORKDIR /app
 
@@ -63,9 +63,13 @@ RUN npm run build
 # ================================
 # Stage 3: Production Runtime
 # ================================
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 -G nodejs
 
 # Install production dependencies for server
 COPY server/package.json server/package-lock.json ./server/
@@ -91,6 +95,9 @@ ENV PORT=3000
 
 # Expose port
 EXPOSE 3000
+
+# Switch to non-root user for security
+USER nodejs
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \

@@ -1,7 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 
-// const URL = 'http://localhost:3000'; // Hardcoded for debugging
-const URL = import.meta.env.VITE_API_URL || 'https://draw.jboxtv.com';
+// If VITE_API_URL is provided, use it. Otherwise, default to undefined to use same-origin (window.location)
+const URL = import.meta.env.VITE_API_URL || undefined;
 console.log('🔌 Socket connecting to:', URL);
 
 const getUserId = () => {

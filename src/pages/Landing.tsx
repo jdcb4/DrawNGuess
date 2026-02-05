@@ -204,54 +204,76 @@ export const Landing: React.FC = () => {
                         </div>
                     )}
 
-                    <div className={styles.actionCol}>
-                        <h3>HOST</h3>
-                        <Button
-                            size="lg"
-                            onClick={handleHost}
-                            className={styles.fullBtn}
-                            disabled={isConnecting}
-                            data-testid="host-btn"
-                        >
-                            {isConnecting ? <><span className={styles.spinner}></span> CREATING...</> : 'CREATE'}
-                        </Button>
-                    </div>
-
-                    <div className={styles.actionCol}>
-                        <h3>JOIN</h3>
-                        <div className={styles.joinRow}>
-                            <div style={{ position: 'relative', flex: 1 }}>
-                                <Input
-                                    placeholder="CODE"
-                                    value={joinCode}
-                                    onChange={e => setJoinCode(e.target.value.toUpperCase())}
-                                    maxLength={4}
-                                    data-testid="room-code-input"
-                                    aria-label="Room Code"
-                                />
-                                {joinCode.length > 0 && (
-                                    <span style={{
-                                        position: 'absolute',
-                                        right: '10px',
-                                        top: '50%',
-                                        transform: 'translateY(-50%)',
-                                        fontSize: '0.8rem',
-                                        color: joinCode.length === 4 ? '#4ade80' : '#9ca3af'
-                                    }}>
-                                        {joinCode.length === 4 ? '✅' : `${joinCode.length}/4`}
-                                    </span>
-                                )}
-                            </div>
+                    {inviteCode ? (
+                        /* JOIN MODE (When accessed via link/QR) */
+                        <div className={styles.actionCol} style={{ gridColumn: '1 / -1', maxWidth: '400px', margin: '0 auto' }}>
+                            <h3>JOIN GAME</h3>
+                            <p style={{ margin: '1rem 0', opacity: 0.8 }}>
+                                joining room <strong style={{ color: '#4ECDC4' }}>{inviteCode}</strong>
+                            </p>
                             <Button
-                                variant="outline"
+                                size="lg"
                                 onClick={handleJoin}
-                                disabled={isConnecting || (joinCode.length > 0 && joinCode.length < 4)}
+                                className={styles.fullBtn}
+                                disabled={isConnecting || !name}
                                 data-testid="join-btn"
                             >
-                                {isConnecting ? '...' : 'GO'}
+                                {isConnecting ? 'JOINING...' : 'JOIN NOW'}
                             </Button>
                         </div>
-                    </div>
+                    ) : (
+                        /* DEFAULT MODE (Host or Join manually) */
+                        <>
+                            <div className={styles.actionCol}>
+                                <h3>HOST</h3>
+                                <Button
+                                    size="lg"
+                                    onClick={handleHost}
+                                    className={styles.fullBtn}
+                                    disabled={isConnecting}
+                                    data-testid="host-btn"
+                                >
+                                    {isConnecting ? <><span className={styles.spinner}></span> CREATING...</> : 'CREATE'}
+                                </Button>
+                            </div>
+
+                            <div className={styles.actionCol}>
+                                <h3>JOIN</h3>
+                                <div className={styles.joinRow}>
+                                    <div style={{ position: 'relative', flex: 1 }}>
+                                        <Input
+                                            placeholder="CODE"
+                                            value={joinCode}
+                                            onChange={e => setJoinCode(e.target.value.toUpperCase())}
+                                            maxLength={4}
+                                            data-testid="room-code-input"
+                                            aria-label="Room Code"
+                                        />
+                                        {joinCode.length > 0 && (
+                                            <span style={{
+                                                position: 'absolute',
+                                                right: '10px',
+                                                top: '50%',
+                                                transform: 'translateY(-50%)',
+                                                fontSize: '0.8rem',
+                                                color: joinCode.length === 4 ? '#4ade80' : '#9ca3af'
+                                            }}>
+                                                {joinCode.length === 4 ? '✅' : `${joinCode.length}/4`}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <Button
+                                        variant="outline"
+                                        onClick={handleJoin}
+                                        disabled={isConnecting || (joinCode.length > 0 && joinCode.length < 4)}
+                                        data-testid="join-btn"
+                                    >
+                                        {isConnecting ? '...' : 'GO'}
+                                    </Button>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </main>
         </div>

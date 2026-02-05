@@ -1,18 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Room } from '@shared/types';
 import { Canvas } from '../../components/Canvas';
 import { useSocket } from '../../hooks/useSocket';
 import { useNavigate } from 'react-router-dom';
 import { Toast } from '../../components/ui/Toast';
+import { generateImageStrip } from '../../utils/shareUtils';
 import './BookViewer.css';
 
 interface BookViewerProps {
     room: Room;
 }
 
+/**
+ * BookViewer Component
+ * 
+ * Displays the final "books" at the end of the game.
+ * Allows players to navigate through pages (Drawings/Guesses) and
+ * browse other players' books using the top navigation arrows.
+ * 
+ * Features:
+ * - Swipe gestures for mobile page navigation
+ * - Top-level book selector (Prev/Next Book)
+ * - Share functionality (Generates image strip)
+ * - "Return to Home" for game reset
+ */
 export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
     const navigate = useNavigate();
     const { socket } = useSocket();
+
+    // Identify current player
+    const myPlayerId = room.players.find(p => p.socketId === socket.id)?.id;
+
+    // State for which book we are viewing (default to own book)
+    const [viewingPlayerId, setViewingPlayerId] = useState<string | null>(myPlayerId || null);
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
     const [isGenerating, setIsGenerating] = useState(false);
     const [showToast, setShowToast] = useState(false);
@@ -20,6 +40,11 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
     // Swipe State
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    // Reset page index when switching books
+    useEffect(() => {
+        setCurrentPageIndex(0);
+    }, [viewingPlayerId]);
 
     const onTouchStart = (e: React.TouchEvent) => {
         setTouchEnd(null);
@@ -43,15 +68,24 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
         }
     };
 
-    // Find the book that belongs to this player
-    const player = room.players.find(p => p.socketId === socket.id);
-    const myBook = room.gameState.books.find(b => b.id === player?.id);
+    // Get list of players who have books (usually all, but good for safety)
+    const bookOwners = room.players.filter(p => room.gameState.books.some(b => b.id === p.id));
 
-    if (!myBook) {
+    // Sort owners to have "Me" first, then others alphabetically or by ID
+    const sortedOwners = [...bookOwners].sort((a, b) => {
+        if (a.id === myPlayerId) return -1;
+        if (b.id === myPlayerId) return 1;
+        return a.name.localeCompare(b.name);
+    });
+
+    const currentOwnerIndex = sortedOwners.findIndex(p => p.id === viewingPlayerId);
+    const viewingBook = room.gameState.books.find(b => b.id === viewingPlayerId);
+
+    if (!viewingBook || !viewingPlayerId) {
         return (
             <div className="book-viewer">
                 <div className="container center">
-                    <h2>Loading your book...</h2>
+                    <h2>Loading books...</h2>
                 </div>
             </div>
         );
@@ -59,9 +93,9 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
 
     // Include secret word as first page for display
     const allPages = [
-        { type: 'word' as const, content: myBook.secretWord, playerName: 'SECRET', disconnected: false },
-        // Filter out only the initial secret word page, preserve any other word pages
-        ...myBook.pages.filter(p => !(p.type === 'word' && p.playerName === 'SECRET'))
+        { type: 'word' as const, content: viewingBook.secretWord, playerName: 'SECRET', disconnected: false },
+        // Filter out only the initial secret word page if it exists in pages array (duplicates check)
+        ...viewingBook.pages.filter(p => !(p.type === 'word' && p.playerName === 'SECRET'))
     ];
 
     const currentPage = allPages[currentPageIndex];
@@ -77,6 +111,16 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
         if (currentPageIndex > 0) {
             setCurrentPageIndex(currentPageIndex - 1);
         }
+    };
+
+    const nextBook = () => {
+        const nextIndex = (currentOwnerIndex + 1) % sortedOwners.length;
+        setViewingPlayerId(sortedOwners[nextIndex].id);
+    };
+
+    const prevBook = () => {
+        const prevIndex = (currentOwnerIndex - 1 + sortedOwners.length) % sortedOwners.length;
+        setViewingPlayerId(sortedOwners[prevIndex].id);
     };
 
     const renderPage = (page: any) => {
@@ -118,7 +162,7 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
         setIsGenerating(true);
         // Add delay for UX
         await new Promise(r => setTimeout(r, 800));
-        await generateImageStrip(allPages, myBook.ownerName);
+        await generateImageStrip(allPages, viewingBook.ownerName, room.id);
         setIsGenerating(false);
         setShowToast(true);
     };
@@ -128,6 +172,8 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
         navigate('/');
     };
 
+    const isMyBook = viewingPlayerId === myPlayerId;
+
     return (
         <div className="book-viewer">
             <Toast
@@ -136,14 +182,37 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
                 onClose={() => setShowToast(false)}
             />
 
-            <div className="book-header">
-                <h1 className="book-title">📖 {myBook.ownerName}'s Book</h1>
-                <p className="book-subtitle">Swipe through to see how your word evolved!</p>
+            {/* Large Book Navigation - Prominent at top */}
+            <div className="book-nav-section">
+                <div className="book-nav-label">VIEWING BOOKS</div>
+
+                <div className="book-selector">
+                    <button className="book-arrow" onClick={prevBook} aria-label="Previous book">
+                        ◀
+                    </button>
+
+                    <div className="book-info">
+                        <h1 className="book-title">
+                            {isMyBook ? 'YOUR BOOK' : `${viewingBook.ownerName}'S BOOK`}
+                        </h1>
+                        <p className="book-counter">
+                            Book {currentOwnerIndex + 1} of {sortedOwners.length}
+                        </p>
+                    </div>
+
+                    <button className="book-arrow" onClick={nextBook} aria-label="Next book">
+                        ▶
+                    </button>
+                </div>
             </div>
 
-            <div className="book-content">
+            {/* Visual separator */}
+            <div className="section-divider"></div>
+
+            {/* Page Content Area - Centered */}
+            <div className="page-content-area">
                 <div
-                    className="page-container"
+                    className="page-display"
                     onTouchStart={onTouchStart}
                     onTouchMove={onTouchMove}
                     onTouchEnd={onTouchEnd}
@@ -151,39 +220,49 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
                     {renderPage(currentPage)}
                 </div>
 
-                <div className="page-navigation">
-                    <button
-                        className="nav-btn prev"
-                        onClick={prevPage}
-                        disabled={currentPageIndex === 0}
-                    >
-                        ← Prev
-                    </button>
+                {/* Small Page Navigation - Pinned to content */}
+                <div className="page-nav-section">
+                    <div className="page-nav-label">PAGES</div>
 
-                    <div className="page-indicators">
-                        {allPages.map((_, index) => (
-                            <div
-                                key={index}
-                                className={`page-dot ${index === currentPageIndex ? 'active' : ''}`}
-                                onClick={() => setCurrentPageIndex(index)}
-                            />
-                        ))}
+                    <div className="page-navigation">
+                        <button
+                            className="page-arrow"
+                            onClick={prevPage}
+                            disabled={currentPageIndex === 0}
+                            aria-label="Previous page"
+                        >
+                            ◀
+                        </button>
+
+                        <div className="page-indicators">
+                            {allPages.map((_, index) => (
+                                <div
+                                    key={index}
+                                    className={`page-dot ${index === currentPageIndex ? 'active' : ''}`}
+                                    onClick={() => setCurrentPageIndex(index)}
+                                    role="button"
+                                    aria-label={`Go to page ${index + 1}`}
+                                />
+                            ))}
+                        </div>
+
+                        <button
+                            className="page-arrow"
+                            onClick={nextPage}
+                            disabled={currentPageIndex === totalPages - 1}
+                            aria-label="Next page"
+                        >
+                            ▶
+                        </button>
                     </div>
 
-                    <button
-                        className="nav-btn next"
-                        onClick={nextPage}
-                        disabled={currentPageIndex === totalPages - 1}
-                    >
-                        Next →
-                    </button>
-                </div>
-
-                <div className="page-counter">
-                    Page {currentPageIndex + 1} of {totalPages}
+                    <div className="page-counter">
+                        Page {currentPageIndex + 1} of {totalPages}
+                    </div>
                 </div>
             </div>
 
+            {/* Action Buttons */}
             <div className="final-actions">
                 <button className="action-btn home" onClick={handleHome}>
                     🏠 Return to Home
@@ -193,148 +272,11 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
                     onClick={handleShare}
                     disabled={isGenerating}
                 >
-                    {isGenerating ? 'Generating...' : '📸 Share Result'}
+                    {isGenerating ? 'Generating...' : `📸 Share ${isMyBook ? 'My' : 'This'} Book`}
                 </button>
             </div>
-
-            <div className="book-instructions">
-                <p>🗣️ Share the hilarious results with your friends!</p>
-                <p>Other players can browse their own books too.</p>
-            </div>
-        </div >
+        </div>
     );
 };
 
-// Start of Share Logic helper
-const generateImageStrip = async (pages: any[], bookOwner: string) => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
 
-    // Config
-    const width = 600;
-    const cardPadding = 15;
-    const cornerRadius = 15;
-
-    // Calculate dynamic height and prepare layout
-    let totalHeight = 100; // Header fixed height
-    const items: any[] = [];
-
-    for (const page of pages) {
-        if (page.type === 'word' && page.playerName === 'SECRET') {
-            // Secret Word Card
-            const height = 120;
-            items.push({ type: 'secret', content: page.content, height });
-            totalHeight += height + cardPadding;
-        } else if (page.type === 'draw') {
-            // Drawing Card
-            const height = 450 + 60; // Image + Author Bar
-            items.push({ type: 'draw', content: page.content, author: page.playerName, height });
-            totalHeight += height + cardPadding;
-        } else if (page.type === 'guess') {
-            // Guess Card
-            const height = 140;
-            items.push({ type: 'guess', content: page.content, author: page.playerName, height });
-            totalHeight += height + cardPadding;
-        }
-    }
-
-    // Set Canvas Size
-    canvas.width = width;
-    canvas.height = totalHeight + 40; // Add bottom padding
-
-    // Background
-    ctx.fillStyle = '#121212';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // --- Header ---
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#FF6B9D';
-    ctx.font = 'bold 36px sans-serif';
-    ctx.fillText(`${bookOwner}'s Book`, width / 2, 60);
-
-    // --- Render Items ---
-    let currentY = 100;
-
-    const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
-        ctx.beginPath();
-        ctx.roundRect(x, y, w, h, r);
-        ctx.fill();
-    };
-
-    for (const item of items) {
-        const x = 20;
-        const w = width - 40;
-
-        if (item.type === 'secret') {
-            // Box
-            ctx.fillStyle = '#FF6B9D';
-            ctx.shadowColor = 'rgba(255, 107, 157, 0.4)';
-            ctx.shadowBlur = 10;
-            roundRect(x, currentY, w, item.height, cornerRadius);
-            ctx.shadowBlur = 0;
-
-            // Text
-            ctx.fillStyle = '#000';
-            ctx.font = 'bold 20px sans-serif';
-            ctx.fillText('SECRET WORD', width / 2, currentY + 40);
-
-            ctx.fillStyle = '#000';
-            ctx.font = 'bold 40px sans-serif';
-            ctx.fillText(item.content, width / 2, currentY + 85);
-
-        } else if (item.type === 'guess') {
-            // Box
-            ctx.fillStyle = '#333';
-            roundRect(x, currentY, w, item.height, cornerRadius);
-
-            // Label
-            ctx.fillStyle = '#4ECDC4';
-            ctx.font = 'italic 16px sans-serif';
-            ctx.fillText(`Guessed by ${item.author}`, width / 2, currentY + 40);
-
-            // Content
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 32px sans-serif';
-            ctx.fillText(`"${item.content}"`, width / 2, currentY + 90);
-
-        } else if (item.type === 'draw') {
-            // Box Background
-            ctx.fillStyle = '#fff'; // White bg for drawing to look correct
-            roundRect(x, currentY, w, item.height, cornerRadius);
-
-            // Image
-            const img = new Image();
-            await new Promise((resolve) => {
-                img.onload = resolve;
-                img.src = item.content;
-            });
-
-            // Draw Image
-            // We want to fit it nicely? The canvas itself is likely 3:2 or similar. 
-            // We allocated 450px height.
-            ctx.drawImage(img, x, currentY, w, 450);
-
-            // Author Bar at bottom of card
-            ctx.fillStyle = '#222';
-            // Draw bottom rounded rect for text
-            ctx.beginPath();
-            ctx.roundRect(x, currentY + 450, w, 60, [0, 0, cornerRadius, cornerRadius]);
-            ctx.fill();
-
-            ctx.fillStyle = '#aaa';
-            ctx.font = '16px sans-serif';
-            ctx.fillText(`Drawn by ${item.author}`, width / 2, currentY + 485);
-        }
-
-        currentY += item.height + cardPadding;
-    }
-
-    // Trigger download
-    const link = document.createElement('a');
-    link.download = `telestrations-${bookOwner}.png`;
-    link.href = canvas.toDataURL();
-    document.body.appendChild(link); // Required for Firefox/some browsers
-    link.click();
-    document.body.removeChild(link);
-};

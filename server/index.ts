@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: '../.env' }); // Load from root
 
-// restart trigger
 import express from 'express';
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import cors from 'cors';
+import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { SOCKET_EVENTS } from '../shared/events';
 import { SERVER_CONFIG } from '../shared/config';
@@ -14,6 +14,23 @@ import { registerGameHandlers } from './handlers/gameHandler';
 import { registerTeamHandlers } from './handlers/teamHandler';
 
 const app = express();
+
+// Security headers middleware (Helmet)
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            imgSrc: ["'self'", "data:", "blob:"],
+            connectSrc: ["'self'", "ws:", "wss:"],
+            objectSrc: ["'none'"],
+            frameAncestors: ["'none'"]
+        }
+    },
+    crossOriginEmbedderPolicy: false // Required for data: URLs in canvas
+}));
 
 // Rate limiting middleware (security against DoS)
 const limiter = rateLimit({

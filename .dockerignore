@@ -17,5 +17,6 @@ coverage
 __tests__
 playwright-report
 test-results
+coverage
 .gemini
 consultants

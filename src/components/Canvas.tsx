@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import type { TouchEvent, MouseEvent } from 'react';
+import type { MouseEvent } from 'react';
 import './Canvas.css';
 
 interface CanvasProps {
@@ -47,11 +47,12 @@ export const Canvas: React.FC<CanvasProps> = ({ onDrawingComplete, readonly = fa
         }
     }, [initialDrawing]);
 
-    const getCoordinates = (e: TouchEvent | MouseEvent, canvas: HTMLCanvasElement) => {
+    const getCoordinates = (e: React.TouchEvent | React.MouseEvent | TouchEvent | MouseEvent, canvas: HTMLCanvasElement) => {
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
 
+        // Use 'touches' in e check which works for both React and DOM types
         if ('touches' in e) {
             return {
                 x: (e.touches[0].clientX - rect.left) * scaleX,
@@ -65,9 +66,10 @@ export const Canvas: React.FC<CanvasProps> = ({ onDrawingComplete, readonly = fa
         }
     };
 
-    const startDrawing = (e: TouchEvent<HTMLCanvasElement> | MouseEvent<HTMLCanvasElement>) => {
+    const startDrawing = (e: React.TouchEvent<HTMLCanvasElement> | React.MouseEvent<HTMLCanvasElement> | TouchEvent | MouseEvent) => {
         if (readonly) return;
-        e.preventDefault();
+        // preventDefault might not exist on some synthetic events if already handled, but fine here
+        if (e.cancelable) e.preventDefault();
 
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -77,9 +79,9 @@ export const Canvas: React.FC<CanvasProps> = ({ onDrawingComplete, readonly = fa
         setIsDrawing(true);
     };
 
-    const draw = (e: TouchEvent<HTMLCanvasElement> | MouseEvent<HTMLCanvasElement>) => {
+    const draw = (e: React.TouchEvent<HTMLCanvasElement> | React.MouseEvent<HTMLCanvasElement> | TouchEvent | MouseEvent) => {
         if (!isDrawing || readonly) return;
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
 
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext('2d');
@@ -123,6 +125,33 @@ export const Canvas: React.FC<CanvasProps> = ({ onDrawingComplete, readonly = fa
         onDrawingComplete(dataUrl);
     };
 
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const handleTouchStart = (e: TouchEvent) => {
+            startDrawing(e);
+        };
+        const handleTouchMove = (e: TouchEvent) => {
+            draw(e);
+        };
+        const handleTouchEnd = (_e: TouchEvent) => {
+            stopDrawing();
+        };
+
+        canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+        canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+        canvas.addEventListener('touchend', handleTouchEnd);
+        canvas.addEventListener('touchcancel', handleTouchEnd);
+
+        return () => {
+            canvas.removeEventListener('touchstart', handleTouchStart);
+            canvas.removeEventListener('touchmove', handleTouchMove);
+            canvas.removeEventListener('touchend', handleTouchEnd);
+            canvas.removeEventListener('touchcancel', handleTouchEnd);
+        };
+    }, [isDrawing, tool, color, readonly]); // Re-bind when state changes to capture defaults
+
     if (readonly) {
         return (
             <div className="canvas-container readonly">
@@ -130,6 +159,8 @@ export const Canvas: React.FC<CanvasProps> = ({ onDrawingComplete, readonly = fa
             </div>
         );
     }
+
+    // ... (rest of component)
 
     return (
         <div className="canvas-container">
@@ -152,18 +183,16 @@ export const Canvas: React.FC<CanvasProps> = ({ onDrawingComplete, readonly = fa
                     </button>
                 </div>
 
-                {tool === 'brush' && (
-                    <div className="color-picker">
-                        {COLORS.map(c => (
-                            <button
-                                key={c}
-                                className={`color-btn ${color === c ? 'active' : ''}`}
-                                style={{ backgroundColor: c }}
-                                onClick={() => setColor(c)}
-                            />
-                        ))}
-                    </div>
-                )}
+                <div className="color-picker" style={{ opacity: tool === 'brush' ? 1 : 0.2, pointerEvents: tool === 'brush' ? 'auto' : 'none' }}>
+                    {COLORS.map(c => (
+                        <button
+                            key={c}
+                            className={`color-btn ${color === c ? 'active' : ''}`}
+                            style={{ backgroundColor: c }}
+                            onClick={() => setColor(c)}
+                        />
+                    ))}
+                </div>
             </div>
 
             <canvas
@@ -172,10 +201,6 @@ export const Canvas: React.FC<CanvasProps> = ({ onDrawingComplete, readonly = fa
                 onMouseMove={draw}
                 onMouseUp={stopDrawing}
                 onMouseLeave={stopDrawing}
-                onTouchStart={startDrawing}
-                onTouchMove={draw}
-                onTouchEnd={stopDrawing}
-                onTouchCancel={stopDrawing}
             />
         </div>
     );

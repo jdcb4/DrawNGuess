@@ -64,7 +64,7 @@ docker run -d \
 ```
 
 > [!IMPORTANT]
-> See [Docker Deployment Guide](./consultants/docker_deployment_guide.md) for full instructions, including Railway/Render deployment and production configuration.
+> See [Docker Deployment Guide](./DEPLOYMENT.md) for full instructions, including Railway/Render deployment and production configuration.
 
 ### Environment Variables for Production
 

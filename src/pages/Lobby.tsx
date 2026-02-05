@@ -70,7 +70,6 @@ export const Lobby: React.FC = () => {
 
         // Socket Listeners
         socket.on(SOCKET_EVENTS.ROOM_UPDATE, (updatedRoom: Room) => {
-            console.log('Room update:', updatedRoom);
             setRoom(updatedRoom);
             // UX: Automatically expand the user's team on first load/update if not already interacting
             if (!expandedTeamId && userId) {
@@ -188,6 +187,55 @@ export const Lobby: React.FC = () => {
             />
 
             <Modal
+                isOpen={showQR}
+                title="JOIN CODE"
+                onClose={() => setShowQR(false)}
+                onAction={async () => {
+                    const url = `${window.location.origin}/join/${room.id}`;
+                    try {
+                        // Try Web Share API first
+                        if (navigator.share) {
+                            await navigator.share({
+                                title: 'Join my DrawNGuess game!',
+                                text: `Join room ${room.id}`,
+                                url: url
+                            });
+                            setToastMessage('SHARED! 📤');
+                            setShowWarning(true);
+                            setTimeout(() => setShowWarning(false), 2000);
+                        } else {
+                            // Fallback to copy
+                            throw new Error('Share not supported');
+                        }
+                    } catch (err) {
+                        // Fallback to clipboard copy
+                        navigator.clipboard.writeText(url).then(() => {
+                            setToastMessage('URL COPIED! 📋');
+                            setShowWarning(true);
+                            setTimeout(() => setShowWarning(false), 2000);
+                        });
+                    }
+                }}
+                actionText="📤 SHARE"
+                onCancel={() => {
+                    const url = `${window.location.origin}/join/${room.id}`;
+                    navigator.clipboard.writeText(url).then(() => {
+                        setToastMessage('URL COPIED! 📋');
+                        setShowWarning(true);
+                        setTimeout(() => setShowWarning(false), 2000);
+                    });
+                }}
+                cancelText="COPY URL"
+                onConfirm={() => setShowQR(false)}
+                confirmText="CLOSE"
+            >
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '1rem 0' }}>
+                    <LobbyQR code={room.id} />
+                    <p style={{ marginTop: '1rem', fontSize: '2rem', fontWeight: 'bold', letterSpacing: '0.1em' }}>{room.id}</p>
+                </div>
+            </Modal>
+
+            <Modal
                 isOpen={!!kickTarget}
                 title="KICK PLAYER"
                 onClose={() => setKickTarget(null)}
@@ -217,19 +265,7 @@ export const Lobby: React.FC = () => {
                 </div>
             </Modal>
 
-            <Modal
-                isOpen={showQR}
-                title="JOIN CODE"
-                onClose={() => setShowQR(false)}
-                onConfirm={() => setShowQR(false)}
-                confirmText="CLOSE"
-                cancelText=""
-            >
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '1rem' }}>
-                    <LobbyQR code={room.id} />
-                    <p style={{ marginTop: '1rem', fontSize: '2rem', fontWeight: 'bold', letterSpacing: '0.1em' }}>{room.id}</p>
-                </div>
-            </Modal>
+
 
             <header className={styles.header}>
                 <div className={styles.headerTop}>
@@ -463,6 +499,6 @@ export const Lobby: React.FC = () => {
                     )
                 )}
             </footer>
-        </div>
+        </div >
     );
 };

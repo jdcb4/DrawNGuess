@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Viewer Design Mockups</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6b9d;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            color: #4ecdc4;
+            margin: 60px 0 20px;
+            border-bottom: 2px solid #222;
+            padding-bottom: 10px;
+        }
+
+        .mockup-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .mockup {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .description {
+            background: #1a1a2e;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            max-width: 450px;
+            border-left: 4px solid #4ecdc4;
+        }
+
+        .description h4 {
+            color: #ff6b9d;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .description ul {
+            margin-left: 20px;
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .description li {
+            margin: 8px 0;
+        }
+
+        .pro {
+            color: #4ade80;
+        }
+
+        .con {
+            color: #f87171;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📚 Book Viewer Design Mockups</h1>
+
+    <h2>Design 1: Horizontal Book Tabs</h2>
+    <div class="mockup-container">
+        <div>
+            <div class="mockup" id="design1"></div>
+            <div class="description">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Books displayed as horizontal tabs at top</li>
+                    <li>Active book highlighted with pink accent</li>
+                    <li>Page navigation clearly separated below</li>
+                    <li>Visual hierarchy: tabs = context, arrows = progression</li>
+                    <li class="pro">✓ Clear visual separation</li>
+                    <li class="pro">✓ Familiar tab metaphor</li>
+                    <li class="con">✗ Limited space for many books</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Design 2: Sidebar Book Selector</h2>
+    <div class="mockup-container">
+        <div>
+            <div class="mockup" id="design2"></div>
+            <div class="description">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Books in vertical sidebar (book = row change)</li>
+                    <li>Pages in main area (page = subtle transition)</li>
+                    <li>Active book clearly highlighted in sidebar</li>
+                    <li>Large page display with inline navigation</li>
+                    <li class="pro">✓ Scales well with many books</li>
+                    <li class="pro">✓ Clear spatial separation</li>
+                    <li class="con">✗ Less space for page content</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Design 3: Book Carousel with Page Counter</h2>
+    <div class="mockup-container">
+        <div>
+            <div class="mockup" id="design3"></div>
+            <div class="description">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Large book title with prominent arrows (big change)</li>
+                    <li>Page content centered</li>
+                    <li>Small page dots below (subtle progression)</li>
+                    <li>Size contrast: book nav = large, page nav = small</li>
+                    <li class="pro">✓ Clear size hierarchy</li>
+                    <li class="pro">✓ Simple, intuitive</li>
+                    <li class="con">✗ Book arrows might be confused with page nav</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Design 4: Stacked Book Cards</h2>
+    <div class="mockup-container">
+        <div>
+            <div class="mockup" id="design4"></div>
+            <div class="description">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Books shown as "stacked" cards with peek effect</li>
+                    <li>Swipe/click to change books (big gesture)</li>
+                    <li>Pages within active book use subtle indicators</li>
+                    <li>Visual depth conveys context switching</li>
+                    <li class="pro">✓ Unique, engaging visual</li>
+                    <li class="pro">✓ Clear book = layer metaphor</li>
+                    <li class="con">✗ More complex to implement</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Design 5: Split-Level Navigation</h2>
+    <div class="mockup-container">
+        <div>
+            <div class="mockup" id="design5"></div>
+            <div class="description">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Book selector in header with color coding</li>
+                    <li>Page navigation in footer with different style</li>
+                    <li>Color distinction: cyan = books, pink = pages</li>
+                    <li>Spatial + color separation for clarity</li>
+                    <li class="pro">✓ Clear color-coded distinction</li>
+                    <li class="pro">✓ Good use of vertical space</li>
+                    <li class="pro">✓ Consistent with app theme</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data
+        const mockBooks = [
+            { owner: 'Sarah', pages: 5 },
+            { owner: 'Mike', pages: 5 },
+            { owner: 'Lisa', pages: 5 }
+        ];
+
+        const mockPage = {
+            type: 'guess',
+            content: 'BANANA PHONE',
+            author: 'Mike'
+        };
+
+        // Design 1: Horizontal Tabs
+        function renderDesign1() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 450;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#0f0f1e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Tabs at top
+            const tabWidth = 140;
+            const tabHeight = 50;
+            const tabGap = 5;
+            const startX = 10;
+
+            ctx.font = 'bold 14px sans-serif';
+            ctx.textAlign = 'center';
+
+            mockBooks.forEach((book, i) => {
+                const x = startX + i * (tabWidth + tabGap);
+                const isActive = i === 1; // Mike is active
+
+                // Tab background
+                ctx.fillStyle = isActive ? '#ff6b9d' : '#1a1a2e';
+                ctx.beginPath();
+                ctx.roundRect(x, 10, tabWidth, tabHeight, [8, 8, 0, 0]);
+                ctx.fill();
+
+                // Tab text
+                ctx.fillStyle = isActive ? '#000' : '#888';
+                ctx.fillText(book.owner, x + tabWidth / 2, 38);
+
+                if (isActive) {
+                    ctx.fillStyle = '#000';
+                    ctx.font = '10px sans-serif';
+                    ctx.fillText('(YOU)', x + tabWidth / 2, 52);
+                    ctx.font = 'bold 14px sans-serif';
+                }
+            });
+
+            // Content area
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(20, 80, canvas.width - 40, 420);
+
+            // Page content
+            ctx.fillStyle = '#4ecdc4';
+            ctx.fillRect(40, 100, canvas.width - 80, 200);
+
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 32px sans-serif';
+            ctx.fillText('"' + mockPage.content + '"', canvas.width / 2, 210);
+
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px sans-serif';
+            ctx.fillText('Guessed by ' + mockPage.author, canvas.width / 2, 330);
+
+            // Page navigation (clearly separated)
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(30, 360);
+            ctx.lineTo(canvas.width - 30, 360);
+            ctx.stroke();
+
+            // Page arrows
+            ctx.fillStyle = '#666';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText('◀', 60, 400);
+            ctx.fillText('▶', canvas.width - 60, 400);
+
+            // Page dots
+            const dotY = 440;
+            for (let i = 0; i < 5; i++) {
+                ctx.fillStyle = i === 2 ? '#ff6b9d' : '#333';
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2 - 40 + i * 20, dotY, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.fillStyle = '#888';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Page 3 of 5', canvas.width / 2, 470);
+
+            // Action buttons
+            const btnY = 530;
+            ctx.fillStyle = '#2a2a4a';
+            ctx.fillRect(30, btnY, 180, 45);
+            ctx.fillRect(canvas.width - 210, btnY, 180, 45);
+
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('🏠 HOME', 120, btnY + 28);
+            ctx.fillText('📸 SHARE', canvas.width - 120, btnY + 28);
+
+            document.getElementById('design1').appendChild(canvas);
+        }
+
+        // Design 2: Sidebar
+        function renderDesign2() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 550;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#0f0f1e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Sidebar
+            const sidebarW = 150;
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, sidebarW, canvas.height);
+
+            // Sidebar title
+            ctx.fillStyle = '#4ecdc4';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('BOOKS', 15, 30);
+
+            // Book list
+            const bookH = 60;
+            mockBooks.forEach((book, i) => {
+                const y = 60 + i * (bookH + 10);
+                const isActive = i === 1;
+
+                ctx.fillStyle = isActive ? '#4ecdc4' : '#0f0f1e';
+                ctx.fillRect(10, y, sidebarW - 20, bookH);
+
+                ctx.fillStyle = isActive ? '#000' : '#888';
+                ctx.font = 'bold 14px sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(book.owner, 20, y + 28);
+
+                ctx.font = '11px sans-serif';
+                ctx.fillText(book.pages + ' pages', 20, y + 45);
+
+                if (isActive) {
+                    ctx.fillStyle = '#ff6b9d';
+                    ctx.fillRect(5, y, 3, bookH);
+                }
+            });
+
+            // Main content area
+            const mainX = sidebarW + 20;
+            const mainW = canvas.width - sidebarW - 40;
+
+            // Header
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 24px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText("Mike's Book", mainX + mainW / 2, 50);
+
+            // Page content
+            ctx.fillStyle = '#4ecdc4';
+            ctx.fillRect(mainX, 80, mainW, 250);
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 28px sans-serif';
+            ctx.fillText('"' + mockPage.content + '"', mainX + mainW / 2, 220);
+
+            // Page info
+            ctx.fillStyle = '#fff';
+            ctx.font = '14px sans-serif';
+            ctx.fillText('Guessed by ' + mockPage.author, mainX + mainW / 2, 360);
+
+            // Page navigation inline
+            ctx.fillStyle = '#666';
+            ctx.font = 'bold 24px sans-serif';
+            ctx.fillText('◀', mainX + 30, 210);
+            ctx.fillText('▶', mainX + mainW - 30, 210);
+
+            // Page dots
+            const dotY = 390;
+            for (let i = 0; i < 5; i++) {
+                ctx.fillStyle = i === 2 ? '#ff6b9d' : '#444';
+                ctx.beginPath();
+                ctx.arc(mainX + mainW / 2 - 40 + i * 20, dotY, 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Actions
+            ctx.fillStyle = '#2a2a4a';
+            ctx.fillRect(mainX, 450, mainW, 45);
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('📸 SHARE THIS BOOK', mainX + mainW / 2, 478);
+
+            ctx.fillStyle = '#2a2a4a';
+            ctx.fillRect(mainX, 510, mainW, 45);
+            ctx.fillStyle = '#4ecdc4';
+            ctx.fillText('🏠 RETURN HOME', mainX + mainW / 2, 538);
+
+            document.getElementById('design2').appendChild(canvas);
+        }
+
+        // Design 3: Size Hierarchy
+        function renderDesign3() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 450;
+            canvas.height = 650;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#0f0f1e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Large book navigation at top
+            ctx.fillStyle = '#4ecdc4';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('VIEWING BOOKS', canvas.width / 2, 35);
+
+            // Book selector - LARGE
+            ctx.fillStyle = '#2a2a4a';
+            ctx.fillRect(20, 50, canvas.width - 40, 80);
+
+            // Large arrows for book switching
+            ctx.fillStyle = '#4ecdc4';
+            ctx.font = 'bold 40px sans-serif';
+            ctx.fillText('◀', 60, 100);
+            ctx.fillText('▶', canvas.width - 60, 100);
+
+            // Current book name - prominent
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 28px sans-serif';
+            ctx.fillText("Mike's Book", canvas.width / 2, 90);
+
+            ctx.fillStyle = '#888';
+            ctx.font = '14px sans-serif';
+            ctx.fillText('Book 2 of 3', canvas.width / 2, 115);
+
+            // Divider
+            ctx.strokeStyle = '#4ecdc4';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(40, 145);
+            ctx.lineTo(canvas.width - 40, 145);
+            ctx.stroke();
+
+            // Page content - prominent
+            ctx.fillStyle = '#4ecdc4';
+            ctx.fillRect(40, 170, canvas.width - 80, 300);
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 32px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('"' + mockPage.content + '"', canvas.width / 2, 330);
+
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px sans-serif';
+            ctx.fillText('Guessed by ' + mockPage.author, canvas.width / 2, 440);
+
+            // Small page navigation - subtle
+            ctx.fillStyle = '#888';
+            ctx.font = '11px sans-serif';
+            ctx.fillText('PAGES', canvas.width / 2, 495);
+
+            // Small dots
+            const dotY = 515;
+            for (let i = 0; i < 5; i++) {
+                ctx.fillStyle = i === 2 ? '#ff6b9d' : '#333';
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2 - 35 + i * 18, dotY, 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Small page arrows
+            ctx.fillStyle = '#666';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.fillText('◀', 80, 515);
+            ctx.fillText('▶', canvas.width - 80, 515);
+
+            ctx.fillStyle = '#666';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('Page 3 of 5', canvas.width / 2, 545);
+
+            // Actions
+            ctx.fillStyle = '#2a2a4a';
+            ctx.fillRect(30, 575, 180, 45);
+            ctx.fillRect(canvas.width - 210, 575, 180, 45);
+
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('🏠 HOME', 120, 603);
+            ctx.fillText('📸 SHARE', canvas.width - 120, 603);
+
+            document.getElementById('design3').appendChild(canvas);
+        }
+
+        // Design 4: Stacked Cards
+        function renderDesign4() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 470;
+            canvas.height = 650;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#0f0f1e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Title
+            ctx.fillStyle = '#4ecdc4';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('📚 GAME RESULTS', canvas.width / 2, 35);
+
+            // Stacked cards effect - show 3 books
+            const cardW = 360;
+            const cardH = 450;
+            const centerX = canvas.width / 2;
+
+            // Back card (previous book) - peeking left
+            ctx.save();
+            ctx.fillStyle = '#1a1a2e';
+            ctx.globalAlpha = 0.4;
+            ctx.fillRect(centerX - cardW / 2 - 40, 80, cardW, cardH);
+            ctx.restore();
+
+            // Front card (next book) - peeking right
+            ctx.save();
+            ctx.fillStyle = '#1a1a2e';
+            ctx.globalAlpha = 0.4;
+            ctx.fillRect(centerX - cardW / 2 + 40, 80, cardW, cardH);
+            ctx.restore();
+
+            // Active card (current book)
+            ctx.fillStyle = '#2a2a4a';
+            ctx.shadowColor = 'rgba(255,107,157,0.5)';
+            ctx.shadowBlur = 20;
+            ctx.beginPath();
+            ctx.roundRect(centerX - cardW / 2, 70, cardW, cardH, 12);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Card header
+            ctx.fillStyle = '#ff6b9d';
+            ctx.fillRect(centerX - cardW / 2, 70, cardW, 50);
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.fillText("Mike's Book", centerX, 102);
+
+            // Page content
+            ctx.fillStyle = '#4ecdc4';
+            ctx.fillRect(centerX - cardW / 2 + 20, 140, cardW - 40, 250);
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 28px sans-serif';
+            ctx.fillText('"' + mockPage.content + '"', centerX, 275);
+
+            ctx.fillStyle = '#fff';
+            ctx.font = '14px sans-serif';
+            ctx.fillText('Guessed by ' + mockPage.author, centerX, 360);
+
+            // Page indicators in card
+            const dotY = 420;
+            for (let i = 0; i < 5; i++) {
+                ctx.fillStyle = i === 2 ? '#ff6b9d' : '#444';
+                ctx.beginPath();
+                ctx.arc(centerX - 35 + i * 18, dotY, 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.fillStyle = '#888';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('3 / 5', centerX, 450);
+
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('◀ prev          next ▶', centerX, 485);
+
+            // Book navigation arrows - outside card
+            ctx.fillStyle = '#4ecdc4';
+            ctx.font = 'bold 48px sans-serif';
+            ctx.fillText('◀', 40, 310);
+            ctx.fillText('▶', canvas.width - 40, 310);
+
+            ctx.font = '11px sans-serif';
+            ctx.fillText('PREV', 40, 340);
+            ctx.fillText('NEXT', canvas.width - 40, 340);
+            ctx.fillText('BOOK', 40, 355);
+            ctx.fillText('BOOK', canvas.width - 40, 355);
+
+            // Book counter
+            ctx.fillStyle = '#888';
+            ctx.font = '13px sans-serif';
+            ctx.fillText('Book 2 of 3', centerX, 560);
+
+            // Actions
+            ctx.fillStyle = '#2a2a4a';
+            ctx.fillRect(55, 585, 160, 40);
+            ctx.fillRect(canvas.width - 215, 585, 160, 40);
+
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 13px sans-serif';
+            ctx.fillText('🏠 HOME', 135, 610);
+            ctx.fillText('📸 SHARE', canvas.width - 135, 610);
+
+            document.getElementById('design4').appendChild(canvas);
+        }
+
+        // Design 5: Split-Level with Color Coding
+        function renderDesign5() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 450;
+            canvas.height = 650;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#0f0f1e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Header bar - CYAN = BOOKS
+            ctx.fillStyle = '#1a3a3a';
+            ctx.fillRect(0, 0, canvas.width, 80);
+
+            ctx.fillStyle = '#4ecdc4';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('📚 BOOKS', 20, 25);
+
+            // Book selector dropdown style
+            ctx.fillStyle = '#2a4a4a';
+            ctx.beginPath();
+            ctx.roundRect(20, 35, canvas.width - 40, 35, 6);
+            ctx.fill();
+
+            ctx.fillStyle = '#4ecdc4';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('▼  Mike\'s Book', 35, 58);
+
+            ctx.fillStyle = '#888';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText('2 of 3', canvas.width - 35, 58);
+
+            // Content area - neutral
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 80, canvas.width, 470);
+
+            // Page display
+            ctx.fillStyle = '#4ecdc4';
+            ctx.fillRect(30, 110, canvas.width - 60, 280);
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 32px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('"' + mockPage.content + '"', canvas.width / 2, 260);
+
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px sans-serif';
+            ctx.fillText('Guessed by ' + mockPage.author, canvas.width / 2, 350);
+
+            // Action buttons in content
+            ctx.fillStyle = '#2a2a4a';
+            ctx.fillRect(40, 420, 170, 45);
+            ctx.fillRect(canvas.width - 210, 420, 170, 45);
+
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('🏠 HOME', 125, 448);
+            ctx.fillText('📸 SHARE', canvas.width - 125, 448);
+
+            // Footer bar - PINK = PAGES
+            ctx.fillStyle = '#2a1a2a';
+            ctx.fillRect(0, 550, canvas.width, 100);
+
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('📄 PAGES', 20, 575);
+
+            // Page navigation
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 32px sans-serif';
+            ctx.fillText('◀', 60, 615);
+            ctx.fillText('▶', canvas.width - 60, 615);
+
+            // Page dots
+            const dotY = 615;
+            for (let i = 0; i < 5; i++) {
+                ctx.fillStyle = i === 2 ? '#ff6b9d' : '#3a2a3a';
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2 - 40 + i * 20, dotY, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Page 3 of 5', canvas.width / 2, 635);
+
+            document.getElementById('design5').appendChild(canvas);
+        }
+
+        // Render all designs
+        renderDesign1();
+        renderDesign2();
+        renderDesign3();
+        renderDesign4();
+        renderDesign5();
+    </script>
+</body>
+
+</html>

@@ -199,8 +199,8 @@ export const registerRoomHandlers = (io: Server, socket: Socket) => {
                         }
                     }, SERVER_CONFIG.disconnectionGracePeriod);
 
-                    // Store timeout reference on player object (cast to any for runtime property)
-                    (playerLeaving as any).disconnectTimeout = timer;
+                    // Store timeout reference in external Map (type-safe, avoids serialization issues)
+                    disconnectionTimers.set(playerLeaving.id, timer);
                 }
             }
         }

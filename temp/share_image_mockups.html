@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Image Design Mockups</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6b9d;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #4ecdc4;
+            margin: 40px 0 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .mockup-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mockup {
+            background: #0d0d0d;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .description {
+            background: #2a2a4a;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            max-width: 400px;
+        }
+
+        .description h4 {
+            color: #ff6b9d;
+            margin-bottom: 8px;
+        }
+
+        .description ul {
+            margin-left: 20px;
+            color: #aaa;
+        }
+
+        .description li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎨 Share Image Design Mockups</h1>
+
+    <h2>Design 1: Card Stack (Consistent Layout)</h2>
+    <div class="mockup-container">
+        <div>
+            <div class="mockup" id="design1"></div>
+            <div class="description">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>All cards same height (equal visual weight)</li>
+                    <li>Name always at BOTTOM of each card</li>
+                    <li>Clear rounded borders on each element</li>
+                    <li>Subtle gradients for depth</li>
+                    <li>Consistent padding and spacing</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Design 2: Photo Strip (Camera Roll Aesthetic)</h2>
+    <div class="mockup-container">
+        <div>
+            <div class="mockup" id="design2"></div>
+            <div class="description">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Film strip perforations on sides</li>
+                    <li>Polaroid-style frames</li>
+                    <li>Handwritten-style name labels</li>
+                    <li>Date stamp aesthetic</li>
+                    <li>Retro photo booth feel</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Design 3: Timeline Flow</h2>
+    <div class="mockup-container">
+        <div>
+            <div class="mockup" id="design3"></div>
+            <div class="description">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Vertical timeline connector</li>
+                    <li>Numbered steps</li>
+                    <li>Name badge prominently on left</li>
+                    <li>Content boxes with consistent sizing</li>
+                    <li>Clear visual flow</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Design 4: Instant Print (Photo Booth)</h2>
+    <div class="mockup-container">
+        <div>
+            <div class="mockup" id="design4"></div>
+            <div class="description">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Classic photo booth strip</li>
+                    <li>White borders like real prints</li>
+                    <li>Stacked frames with slight rotation</li>
+                    <li>Captions below each frame</li>
+                    <li>Fun stamps/doodles aesthetic</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Placeholder data
+        const mockData = {
+            bookOwner: "Sarah",
+            secretWord: "ELEPHANT",
+            pages: [
+                { type: 'draw', author: 'Mike', content: null },
+                { type: 'guess', author: 'Lisa', content: 'LONG NOSE ANIMAL' },
+                { type: 'draw', author: 'Tom', content: null },
+                { type: 'guess', author: 'Emma', content: 'ELEPHANT TRUNK' }
+            ]
+        };
+
+        // Design 1: Card Stack
+        function renderDesign1() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 800;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            grad.addColorStop(0, '#1a1a2e');
+            grad.addColorStop(1, '#16213e');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Header
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 28px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${mockData.bookOwner}'s Book`, canvas.width / 2, 50);
+
+            // Secret Word Card
+            let y = 80;
+            const cardHeight = 120;
+            const cardWidth = 360;
+            const cardX = 20;
+            const cardRadius = 15;
+
+            // Helper for rounded rect
+            function roundRect(x, y, w, h, r) {
+                ctx.beginPath();
+                ctx.roundRect(x, y, w, h, r);
+                ctx.fill();
+            }
+
+            // Secret Word
+            ctx.fillStyle = '#ff6b9d';
+            roundRect(cardX, y, cardWidth, cardHeight, cardRadius);
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.fillText('SECRET WORD', canvas.width / 2, y + 35);
+            ctx.font = 'bold 36px sans-serif';
+            ctx.fillText(mockData.secretWord, canvas.width / 2, y + 80);
+            ctx.font = '12px sans-serif';
+            ctx.fillStyle = '#333';
+            ctx.fillText('Started by ' + mockData.bookOwner, canvas.width / 2, y + cardHeight - 10);
+            y += cardHeight + 15;
+
+            // Content cards
+            mockData.pages.forEach((page, i) => {
+                if (page.type === 'draw') {
+                    // Drawing card
+                    ctx.fillStyle = '#fff';
+                    roundRect(cardX, y, cardWidth, cardHeight, cardRadius);
+
+                    // Placeholder drawing area
+                    ctx.fillStyle = '#f0f0f0';
+                    roundRect(cardX + 10, y + 10, cardWidth - 20, cardHeight - 40, 10);
+                    ctx.fillStyle = '#ccc';
+                    ctx.font = '14px sans-serif';
+                    ctx.fillText('✏️ Drawing', canvas.width / 2, y + cardHeight / 2);
+
+                    // Author bar at bottom
+                    ctx.fillStyle = '#333';
+                    ctx.font = 'bold 14px sans-serif';
+                    ctx.fillText(`Drawn by ${page.author}`, canvas.width / 2, y + cardHeight - 12);
+                } else {
+                    // Guess card
+                    ctx.fillStyle = '#4ecdc4';
+                    roundRect(cardX, y, cardWidth, cardHeight, cardRadius);
+
+                    ctx.fillStyle = '#000';
+                    ctx.font = 'bold 24px sans-serif';
+                    ctx.fillText(`"${page.content}"`, canvas.width / 2, y + cardHeight / 2);
+
+                    ctx.font = 'bold 14px sans-serif';
+                    ctx.fillText(`Guessed by ${page.author}`, canvas.width / 2, y + cardHeight - 12);
+                }
+                y += cardHeight + 15;
+            });
+
+            document.getElementById('design1').appendChild(canvas);
+        }
+
+        // Design 2: Photo Strip (Film Roll)
+        function renderDesign2() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 900;
+            const ctx = canvas.getContext('2d');
+
+            // Film strip background
+            ctx.fillStyle = '#1a1a1a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Perforations on sides
+            ctx.fillStyle = '#000';
+            for (let i = 0; i < canvas.height; i += 40) {
+                ctx.fillRect(5, i + 10, 20, 15);
+                ctx.fillRect(canvas.width - 25, i + 10, 20, 15);
+            }
+
+            // Header area
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'italic bold 24px Georgia, serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${mockData.bookOwner}'s Memories`, canvas.width / 2, 45);
+
+            ctx.fillStyle = '#666';
+            ctx.font = '12px monospace';
+            ctx.fillText('FILM ROLL • 2026', canvas.width / 2, 70);
+
+            let y = 100;
+            const frameWidth = 320;
+            const frameHeight = 140;
+            const frameX = 40;
+
+            // Secret Word Frame
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(frameX, y, frameWidth, frameHeight);
+            ctx.fillStyle = '#ff6b9d';
+            ctx.fillRect(frameX + 8, y + 8, frameWidth - 16, frameHeight - 35);
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('🎯 SECRET WORD', canvas.width / 2, y + 40);
+            ctx.font = 'bold 28px sans-serif';
+            ctx.fillText(mockData.secretWord, canvas.width / 2, y + 80);
+
+            // Handwritten style caption
+            ctx.fillStyle = '#333';
+            ctx.font = 'italic 16px Georgia, serif';
+            ctx.fillText(`~ ${mockData.bookOwner} ~`, canvas.width / 2, y + frameHeight - 12);
+            y += frameHeight + 20;
+
+            // Content frames
+            mockData.pages.forEach((page, i) => {
+                // White polaroid border
+                ctx.fillStyle = '#f5f5f5';
+                ctx.fillRect(frameX, y, frameWidth, frameHeight);
+
+                // Inner content area
+                if (page.type === 'draw') {
+                    ctx.fillStyle = '#e8e8e8';
+                    ctx.fillRect(frameX + 8, y + 8, frameWidth - 16, frameHeight - 40);
+                    ctx.fillStyle = '#999';
+                    ctx.font = '14px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('🖌️ Drawing by ' + page.author, canvas.width / 2, y + 60);
+                } else {
+                    ctx.fillStyle = '#4ecdc4';
+                    ctx.fillRect(frameX + 8, y + 8, frameWidth - 16, frameHeight - 40);
+                    ctx.fillStyle = '#000';
+                    ctx.font = 'bold 18px sans-serif';
+                    ctx.fillText(`"${page.content}"`, canvas.width / 2, y + 60);
+                }
+
+                // Caption area (bottom of polaroid)
+                ctx.fillStyle = '#333';
+                ctx.font = 'italic 14px Georgia, serif';
+                ctx.fillText(`${page.author}`, canvas.width / 2, y + frameHeight - 12);
+
+                y += frameHeight + 15;
+            });
+
+            // Footer stamp
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 12px monospace';
+            ctx.fillText('★ DRAWNGUESS ★', canvas.width / 2, y + 20);
+
+            document.getElementById('design2').appendChild(canvas);
+        }
+
+        // Design 3: Timeline Flow
+        function renderDesign3() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 420;
+            canvas.height = 850;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#0f0f23';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Header
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 26px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${mockData.bookOwner}'s Journey`, canvas.width / 2, 45);
+
+            // Timeline line
+            ctx.strokeStyle = '#4ecdc4';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(60, 80);
+            ctx.lineTo(60, 800);
+            ctx.stroke();
+
+            let y = 100;
+            const boxWidth = 300;
+            const boxHeight = 130;
+            const boxX = 90;
+
+            // Helper for step number
+            function drawStep(num, yPos, color) {
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(60, yPos + boxHeight / 2, 20, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 16px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(num.toString(), 60, yPos + boxHeight / 2 + 5);
+            }
+
+            // Secret Word
+            drawStep(1, y, '#ff6b9d');
+            ctx.fillStyle = '#1e1e3f';
+            ctx.beginPath();
+            ctx.roundRect(boxX, y, boxWidth, boxHeight, 12);
+            ctx.fill();
+            ctx.strokeStyle = '#ff6b9d';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('SECRET WORD', boxX + 15, y + 30);
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 28px sans-serif';
+            ctx.fillText(mockData.secretWord, boxX + 15, y + 70);
+            ctx.fillStyle = '#888';
+            ctx.font = '12px sans-serif';
+            ctx.fillText(`Started by ${mockData.bookOwner}`, boxX + 15, y + 100);
+            y += boxHeight + 25;
+
+            // Content cards
+            mockData.pages.forEach((page, i) => {
+                const color = page.type === 'draw' ? '#9b59b6' : '#4ecdc4';
+                drawStep(i + 2, y, color);
+
+                ctx.fillStyle = '#1e1e3f';
+                ctx.beginPath();
+                ctx.roundRect(boxX, y, boxWidth, boxHeight, 12);
+                ctx.fill();
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Name badge (prominent)
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.roundRect(boxX + 15, y + 15, 80, 25, 5);
+                ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(page.author, boxX + 25, y + 32);
+
+                // Content
+                ctx.fillStyle = '#fff';
+                if (page.type === 'draw') {
+                    ctx.font = '14px sans-serif';
+                    ctx.fillText('✏️ Drew this...', boxX + 15, y + 70);
+                    ctx.fillStyle = '#666';
+                    ctx.font = '12px sans-serif';
+                    ctx.fillText('[Drawing placeholder]', boxX + 15, y + 95);
+                } else {
+                    ctx.font = 'bold 18px sans-serif';
+                    ctx.fillText(`"${page.content}"`, boxX + 15, y + 75);
+                }
+
+                y += boxHeight + 25;
+            });
+
+            document.getElementById('design3').appendChild(canvas);
+        }
+
+        // Design 4: Instant Print (Photo Booth Style)
+        function renderDesign4() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 380;
+            canvas.height = 920;
+            const ctx = canvas.getContext('2d');
+
+            // Cream/vintage paper background
+            ctx.fillStyle = '#f5f0e6';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Subtle paper texture effect (dots)
+            ctx.fillStyle = 'rgba(0,0,0,0.02)';
+            for (let i = 0; i < 500; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 1, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Header with stamp effect
+            ctx.save();
+            ctx.translate(canvas.width / 2, 50);
+            ctx.rotate(-0.05);
+            ctx.fillStyle = '#ff6b9d';
+            ctx.strokeStyle = '#ff6b9d';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.roundRect(-120, -25, 240, 50, 5);
+            ctx.stroke();
+            ctx.font = 'bold 22px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`📸 ${mockData.bookOwner}'s Book`, 0, 8);
+            ctx.restore();
+
+            let y = 100;
+            const photoWidth = 300;
+            const photoHeight = 150;
+            const photoX = 40;
+
+            // Photo frames with slight rotations
+            const rotations = [-0.02, 0.015, -0.01, 0.02, -0.015];
+
+            // Secret Word "photo"
+            ctx.save();
+            ctx.translate(photoX + photoWidth / 2, y + photoHeight / 2);
+            ctx.rotate(rotations[0]);
+
+            // White photo border (thicker at bottom like instant camera)
+            ctx.fillStyle = '#fff';
+            ctx.shadowColor = 'rgba(0,0,0,0.2)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 5;
+            ctx.fillRect(-photoWidth / 2 - 10, -photoHeight / 2 - 10, photoWidth + 20, photoHeight + 50);
+            ctx.shadowBlur = 0;
+
+            // Photo content
+            ctx.fillStyle = '#ff6b9d';
+            ctx.fillRect(-photoWidth / 2, -photoHeight / 2, photoWidth, photoHeight);
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('🎯 THE SECRET WORD', 0, -30);
+            ctx.font = 'bold 32px sans-serif';
+            ctx.fillText(mockData.secretWord, 0, 20);
+
+            // Caption below photo
+            ctx.fillStyle = '#333';
+            ctx.font = 'italic 16px Georgia, serif';
+            ctx.fillText(`~ ${mockData.bookOwner} ~`, 0, photoHeight / 2 + 25);
+            ctx.restore();
+
+            y += photoHeight + 70;
+
+            // Content photos
+            mockData.pages.forEach((page, i) => {
+                ctx.save();
+                ctx.translate(photoX + photoWidth / 2, y + photoHeight / 2);
+                ctx.rotate(rotations[(i + 1) % rotations.length]);
+
+                // White photo border
+                ctx.fillStyle = '#fff';
+                ctx.shadowColor = 'rgba(0,0,0,0.15)';
+                ctx.shadowBlur = 8;
+                ctx.shadowOffsetY = 4;
+                ctx.fillRect(-photoWidth / 2 - 10, -photoHeight / 2 - 10, photoWidth + 20, photoHeight + 50);
+                ctx.shadowBlur = 0;
+
+                // Photo content
+                if (page.type === 'draw') {
+                    ctx.fillStyle = '#e8e8e8';
+                    ctx.fillRect(-photoWidth / 2, -photoHeight / 2, photoWidth, photoHeight);
+                    ctx.fillStyle = '#999';
+                    ctx.font = '16px sans-serif';
+                    ctx.fillText('🖌️ [Drawing]', 0, 0);
+                } else {
+                    ctx.fillStyle = '#4ecdc4';
+                    ctx.fillRect(-photoWidth / 2, -photoHeight / 2, photoWidth, photoHeight);
+                    ctx.fillStyle = '#000';
+                    ctx.font = 'bold 20px sans-serif';
+                    ctx.fillText(`"${page.content}"`, 0, 5);
+                }
+
+                // Caption with author
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 14px Georgia, serif';
+                const action = page.type === 'draw' ? 'drew' : 'guessed';
+                ctx.fillText(`${page.author} ${action}`, 0, photoHeight / 2 + 25);
+
+                ctx.restore();
+                y += photoHeight + 70;
+            });
+
+            // Footer stamp
+            ctx.save();
+            ctx.translate(canvas.width / 2, y + 10);
+            ctx.rotate(0.03);
+            ctx.fillStyle = '#ff6b9d';
+            ctx.font = 'bold 14px monospace';
+            ctx.fillText('★ DRAWNGUESS 2026 ★', 0, 0);
+            ctx.restore();
+
+            document.getElementById('design4').appendChild(canvas);
+        }
+
+        // Render all designs
+        renderDesign1();
+        renderDesign2();
+        renderDesign3();
+        renderDesign4();
+    </script>
+</body>
+
+</html>

@@ -35,9 +35,13 @@
 }
 
 .hostTitle {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 4vw, 1.5rem);
     line-height: 1.2;
     margin-bottom: 0.5rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .codeRow {
@@ -48,10 +52,7 @@
     padding: 0.5rem 1rem;
     border-radius: var(--radius-md);
     cursor: pointer;
-    border: 1px solid var(--color-border);
-    min-height: 60px;
-    /* larger tap target */
-    transition: transform 0.2s;
+    /* codeRow block end */
 }
 
 .codeRow:active {
@@ -87,9 +88,10 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
-    padding-bottom: 200px;
-    /* Space for sticky footer */
+    gap: var(--spacing-sm);
+    /* Reduced from md */
+    padding-bottom: 120px;
+    /* Reduced from 200px */
 }
 
 .playerList {
@@ -141,6 +143,7 @@
     right: 0;
     background: var(--color-bg);
     padding: var(--spacing-md);
+    padding-bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom, 0px));
     border-top: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
