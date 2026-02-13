@@ -1,6 +1,6 @@
 # DrawNGuess Deployment Guide
 
-This guide provides instructions for deploying the **DrawNGuess** application using Docker. It covers configuration, build steps, and production considerations.
+This guide provides instructions for deploying the **DrawNGuess** application with Docker and Railway. It covers configuration, build steps, and production considerations.
 
 ## Prerequisites
 
@@ -8,7 +8,7 @@ This guide provides instructions for deploying the **DrawNGuess** application us
 - A valid domain name (recommended for production) or static IP.
 - SSL Certificates (if deploying to the public internet, highly recommended).
 
-## Docker Deployment (Recommended)
+## Docker Deployment
 
 The project includes a multi-stage `Dockerfile` that builds both the React client and the Node.js/Socket.IO server into a single lightweight image.
 
@@ -80,6 +80,45 @@ services:
     restart: always
 ```
 
+## Railway Deployment (Dockerfile-based)
+
+Railway can deploy this project directly from the repository while reusing the same `Dockerfile` used for local/VPS Docker deployment.
+
+### 1. Connect the Repository
+
+1. Push this project to GitHub/GitLab.
+2. In Railway, create a new project and add a service from that repository.
+3. The included `railway.toml` configures Railway to build with the repo `Dockerfile`.
+
+### 2. Set Required Railway Variables
+
+Set these variables on the Railway service:
+
+| Variable | Required | Value |
+| :--- | :--- | :--- |
+| `NODE_ENV` | Yes | `production` |
+| `CORS_ORIGIN` | Yes | Your public client URL (for example `https://your-app.up.railway.app`) |
+| `PORT` | No | Railway injects this automatically |
+| `VITE_API_URL` | No | Only set if client should connect to a different API domain |
+
+Notes:
+- If `VITE_API_URL` is not set, the frontend defaults to same-origin connections, which is preferred for single-service Railway deploys.
+- Keep `numReplicas = 1` (already set in `railway.toml`) because game state is in-memory and not shared across instances.
+
+### 3. Assign a Public Domain
+
+In Railway service settings, generate a public domain. Then set `CORS_ORIGIN` to that exact URL.
+
+### 4. Deploy
+
+Deploy either from the Railway UI (auto deploys on push) or with Railway CLI:
+
+```bash
+railway login
+railway link
+railway up
+```
+
 ## Production Considerations
 
 ### ⚠️ In-Memory State & Scale
@@ -94,7 +133,7 @@ The application currently uses **In-Memory State**.
 - **HTTPS:** Browsers require HTTPS for many modern features (Clipboard API, Service Workers). Run this container behind a reverse proxy like **Nginx** or **Traefik** that handles SSL termination.
 
 ### HEALTHCHECK
-The Dockerfile includes a healthcheck that pings `http://localhost:3000`. Container orchestrators (Kubernetes, AWS ECS, Docker Swarm) can use this to auto-restart unhealthy containers.
+The Dockerfile includes a healthcheck that pings `http://localhost:3000/health`. Container orchestrators (Kubernetes, AWS ECS, Docker Swarm, Railway) can use this to auto-restart unhealthy containers.
 
 ## Troubleshooting
 

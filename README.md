@@ -1,6 +1,6 @@
 # DrawNGuess
 
-A production-ready, clone-able multiplayer **Telestrations-style** game using **React**, **Node.js**, **Socket.io**, and **Docker**.
+A production-ready, clone-able multiplayer **Telestrations-style** game using **React**, **Node.js**, **Socket.io**, **Docker**, and **Railway**.
 
 ## 🚀 Quick Start
 
@@ -64,14 +64,23 @@ docker run -d \
 ```
 
 > [!IMPORTANT]
-> See [Docker Deployment Guide](./DEPLOYMENT.md) for full instructions, including Railway/Render deployment and production configuration.
+> See [Deployment Guide](./DEPLOYMENT.md) for full Docker and Railway production instructions.
 
 ### Environment Variables for Production
 
 - `NODE_ENV=production` - **Required**
 - `PORT=3000` - Default port
 - `CORS_ORIGIN` - **Required** (e.g., `https://draw.jboxtv.com`)
-- `VITE_API_URL` - **Required** for client build (e.g., `https://draw.jboxtv.com`)
+- `VITE_API_URL` - Optional for client build (set only if API is on a different domain)
+
+## Railway Deployment
+
+`railway.toml` is included and configured to deploy this app with the same `Dockerfile` used for Docker/VPS deploys.
+
+1. Link your repo to a Railway service.
+2. Generate a Railway public domain.
+3. Set `NODE_ENV=production` and `CORS_ORIGIN` to that domain in Railway variables.
+4. Deploy from Railway UI or run `railway up`.
 
 ## 🔒 Security & Env
 

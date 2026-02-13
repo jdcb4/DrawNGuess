@@ -15,6 +15,11 @@ import { registerTeamHandlers } from './handlers/teamHandler';
 
 const app = express();
 
+// Liveness endpoint for container/platform health checks.
+app.get('/health', (_req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
+
 // Security headers middleware (Helmet)
 app.use(helmet({
     contentSecurityPolicy: {
