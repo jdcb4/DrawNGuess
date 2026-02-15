@@ -46,6 +46,7 @@ export const APP_CONFIG = {
     timeLimits: {
         draw: 60000, // 60 seconds for drawing
         guess: 30000, // 30 seconds for guessing
+        skip: 15000, // 15 seconds for odd-player skip round
         minSubmitDelay: 5000 // Minimum 5s before can submit (prevent accidents)
     }
 };
@@ -57,6 +58,8 @@ export const APP_CONFIG = {
 export const SERVER_CONFIG = {
     /** Grace period before disconnecting inactive players (30 seconds) */
     disconnectionGracePeriod: 30000,
+    /** Grace period after turn timer expires before auto-filling (allows late client submissions) */
+    serverGracePeriod: 1000,
     /** Duration of countdown phase before game starts (3 seconds) */
     countdownDuration: 3000,
     /** Length of room codes */

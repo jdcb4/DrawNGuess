@@ -17,7 +17,7 @@ export interface Player {
  * Represents a single page in a Telestrations book
  */
 export interface Page {
-    type: 'word' | 'draw' | 'guess';
+    type: 'word' | 'draw' | 'guess' | 'skip';
     playerId: string;
     playerName: string;
     content: string; // Base64 image data for drawings, text for words/guesses

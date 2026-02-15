@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import type { MouseEvent } from 'react';
 import './Canvas.css';
 
@@ -8,16 +8,31 @@ interface CanvasProps {
     initialDrawing?: string;
 }
 
+export interface CanvasHandle {
+    /** Snapshot the current canvas state (captures mid-stroke data) */
+    getSnapshot: () => string;
+}
+
 type Tool = 'brush' | 'eraser';
 
 const COLORS = ['#000000', '#FF6B9D', '#4ECDC4', '#FFE66D', '#FF0055', '#FFFFFF'];
 
-export const Canvas: React.FC<CanvasProps> = ({ onDrawingComplete, readonly = false, initialDrawing }) => {
+export const Canvas = forwardRef<CanvasHandle, CanvasProps>(({ onDrawingComplete, readonly = false, initialDrawing }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [tool, setTool] = useState<Tool>('brush');
     const [color, setColor] = useState('#000000');
     const lastPosRef = useRef<{ x: number; y: number } | null>(null);
+
+    // Expose getSnapshot via imperative handle
+    useImperativeHandle(ref, () => ({
+        getSnapshot: () => {
+            if (canvasRef.current) {
+                return canvasRef.current.toDataURL('image/png');
+            }
+            return '';
+        }
+    }));
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -204,4 +219,4 @@ export const Canvas: React.FC<CanvasProps> = ({ onDrawingComplete, readonly = fa
             />
         </div>
     );
-};
+});

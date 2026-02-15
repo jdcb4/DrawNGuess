@@ -94,8 +94,8 @@ export const BookViewer: React.FC<BookViewerProps> = ({ room }) => {
     // Include secret word as first page for display
     const allPages = [
         { type: 'word' as const, content: viewingBook.secretWord, playerName: 'SECRET', disconnected: false },
-        // Filter out only the initial secret word page if it exists in pages array (duplicates check)
-        ...viewingBook.pages.filter(p => !(p.type === 'word' && p.playerName === 'SECRET'))
+        // Filter out the initial secret word page and skip pages (odd-player skip rounds)
+        ...viewingBook.pages.filter(p => !(p.type === 'word' && p.playerName === 'SECRET') && p.type !== 'skip')
     ];
 
     const currentPage = allPages[currentPageIndex];

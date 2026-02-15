@@ -5,6 +5,7 @@ import { SOCKET_EVENTS } from '@shared/events';
 import type { Room } from '@shared/types';
 import { DrawPhase } from './Game/DrawPhase';
 import { GuessPhase } from './Game/GuessPhase';
+import { SkipPhase } from './Game/SkipPhase';
 import { BookViewer } from './Game/BookViewer';
 
 export const Game: React.FC = () => {
@@ -53,7 +54,7 @@ export const Game: React.FC = () => {
         return <BookViewer room={room} />;
     }
 
-    // Playing phase - determine if drawing or guessing
+    // Playing phase - determine if drawing, guessing, or skipping
     if (status === 'PLAYING') {
         const player = room.players.find(p => p.socketId === socket.id);
         if (!player) return <div className="container center">Player not found...</div>;
@@ -63,14 +64,18 @@ export const Game: React.FC = () => {
         if (!currentBook) return <div className="container center">No book assigned...</div>;
 
         // Determine action based on turn number and player count
-        const getCurrentAction = (turnNumber: number): 'draw' | 'guess' | 'word' => {
-            // Start with Draw (Turn 0), then alternate
-            return turnNumber % 2 === 0 ? 'draw' : 'guess';
+        const getCurrentAction = (turnNumber: number, playerCount: number): 'draw' | 'guess' | 'skip' => {
+            const isOdd = playerCount % 2 !== 0;
+            if (isOdd && turnNumber === 0) return 'skip';
+            const effectiveTurn = isOdd ? turnNumber - 1 : turnNumber;
+            return effectiveTurn % 2 === 0 ? 'draw' : 'guess';
         };
 
-        const action = getCurrentAction(room.gameState.turnNumber);
+        const action = getCurrentAction(room.gameState.turnNumber, room.players.length);
 
-        if (action === 'draw') {
+        if (action === 'skip') {
+            return <SkipPhase room={room} currentBook={currentBook} />;
+        } else if (action === 'draw') {
             return <DrawPhase room={room} currentBook={currentBook} />;
         } else {
             return <GuessPhase room={room} currentBook={currentBook} />;

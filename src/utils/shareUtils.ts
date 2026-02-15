@@ -28,8 +28,9 @@ export const generateImageStrip = async (pages: any[], bookOwner: string, roomCo
     // Calculate items to render
     const items: any[] = [];
 
-    // Process pages into items
+    // Process pages into items (skip pages from odd-player skip rounds are excluded)
     for (const page of pages) {
+        if (page.type === 'skip') continue; // Skip round pages produce no content
         if (page.type === 'word' && page.playerName === 'SECRET') {
             items.push({ type: 'secret', content: page.content, author: bookOwner });
         } else if (page.type === 'draw') {

@@ -2,7 +2,7 @@ import { Server, Socket } from 'socket.io';
 import { SOCKET_EVENTS } from '../../shared/events';
 import { roomManager } from '../state/RoomManager';
 import { getRandomWords } from '../wordBank';
-import { APP_CONFIG } from '../../shared/config';
+import { APP_CONFIG, SERVER_CONFIG } from '../../shared/config';
 import { Book, Page, Room } from '../../shared/types';
 import { disconnectionTimers } from '../state/disconnectionTimers';
 import { sanitizeRoom, sanitizeRoomForPlayer } from '../utils/sanitize';
@@ -25,13 +25,19 @@ const broadcastRoomUpdate = (io: Server, room: Room) => {
  * Determines the action type for the current turn
  * @param turnNumber Current turn number (0-indexed)
  * @param playerCount Total number of players
- * @returns 'draw' | 'guess' | 'word'
+ * @returns 'draw' | 'guess' | 'skip'
  */
-const getCurrentAction = (turnNumber: number, playerCount: number): 'draw' | 'guess' | 'word' => {
-    // Start with Draw (Turn 0), then alternate
-    // Even turns: Draw (0, 2, 4...)
-    // Odd turns: Guess (1, 3, 5...)
-    return turnNumber % 2 === 0 ? 'draw' : 'guess';
+const getCurrentAction = (turnNumber: number, playerCount: number): 'draw' | 'guess' | 'skip' => {
+    const isOdd = playerCount % 2 !== 0;
+
+    // For odd player counts, turn 0 is a skip round (no draw/guess)
+    if (isOdd && turnNumber === 0) return 'skip';
+
+    // Adjust turn number for odd counts (skip round shifts everything by 1)
+    const effectiveTurn = isOdd ? turnNumber - 1 : turnNumber;
+
+    // Even effective turns: Draw, Odd effective turns: Guess
+    return effectiveTurn % 2 === 0 ? 'draw' : 'guess';
 };
 
 /**
@@ -61,12 +67,16 @@ const startNewTurn = (io: Server, roomId: string) => {
     room.gameState.submittedPlayerIds = [];
     room.gameState.turnStartTime = Date.now();
 
-    // Rotate books to next player
-    rotateBooks(roomId);
+    // Don't rotate books on turn 0 — books start with their owners
+    if (room.gameState.turnNumber > 0) {
+        rotateBooks(roomId);
+    }
 
     // Determine time limit based on action type
     const action = getCurrentAction(room.gameState.turnNumber, room.players.length);
-    const timeLimit = action === 'draw' ? APP_CONFIG.timeLimits.draw : APP_CONFIG.timeLimits.guess;
+    const timeLimit = action === 'skip' ? APP_CONFIG.timeLimits.skip
+        : action === 'draw' ? APP_CONFIG.timeLimits.draw
+            : APP_CONFIG.timeLimits.guess;
 
     // Broadcast turn start (personalized)
     room.players.forEach(player => {
@@ -77,11 +87,14 @@ const startNewTurn = (io: Server, roomId: string) => {
 
     // Start robust timer
     turnTimerManager.startTimer(roomId, timeLimit, () => {
-        const currentRoom = roomManager.getRoom(roomId);
-        // Verify (Idempotency check handled in advanceTurn via timer clearing, but extra safe)
-        if (currentRoom && currentRoom.gameState.turnNumber === room.gameState.turnNumber) {
-            advanceTurn(io, roomId);
-        }
+        // Grace period: wait for late client auto-submissions before auto-filling
+        setTimeout(() => {
+            const currentRoom = roomManager.getRoom(roomId);
+            // Verify (Idempotency check handled in advanceTurn via timer clearing, but extra safe)
+            if (currentRoom && currentRoom.gameState.turnNumber === room.gameState.turnNumber) {
+                advanceTurn(io, roomId);
+            }
+        }, SERVER_CONFIG.serverGracePeriod);
     });
 };
 
@@ -131,6 +144,14 @@ const autoFillForPlayer = (roomId: string, playerId: string, disconnected: boole
     // Copy previous page content if available
     const previousPage = book.pages[book.pages.length - 1];
     const content = previousPage ? previousPage.content : '';
+
+    // Skip rounds don't produce content pages — just mark as submitted
+    if (action === 'skip') {
+        if (!room.gameState.submittedPlayerIds.includes(playerId)) {
+            room.gameState.submittedPlayerIds.push(playerId);
+        }
+        return;
+    }
 
     const autoFilledPage: Page = {
         type: action === 'draw' ? 'draw' : 'guess',
@@ -389,6 +410,35 @@ export const registerGameHandlers = (io: Server, socket: Socket) => {
     socket.on(SOCKET_EVENTS.PLAYER_READY, ({ roomId }: { roomId: string }) => {
         // This is handled by SUBMIT_DRAWING and SUBMIT_GUESS
         // Just a placeholder for explicit ready events if needed
+    });
+
+    /**
+     * Player marks ready during odd-player skip round
+     */
+    socket.on(SOCKET_EVENTS.SUBMIT_SKIP_READY, ({ roomId }: { roomId: string }) => {
+        const room = roomManager.getRoom(roomId);
+        if (!room || room.gameState.status !== 'PLAYING') return;
+
+        const player = room.players.find(p => p.socketId === socket.id);
+        if (!player) return;
+
+        // Verify this is actually a skip round
+        const action = getCurrentAction(room.gameState.turnNumber, room.players.length);
+        if (action !== 'skip') return;
+
+        // Check if player already submitted
+        if (room.gameState.submittedPlayerIds.includes(player.id)) return;
+
+        // Mark as submitted (no page added — skip rounds produce no content)
+        room.gameState.submittedPlayerIds.push(player.id);
+
+        // Update room
+        broadcastRoomUpdate(io, room);
+
+        // Check if all players submitted
+        if (room.gameState.submittedPlayerIds.length === room.players.length) {
+            advanceTurn(io, roomId);
+        }
     });
 
     /**

@@ -39,6 +39,7 @@ export const SOCKET_EVENTS = {
     TURN_ADVANCE: 'turn_advance', // Server broadcasts turn progression
     TURN_TIMEOUT: 'turn_timeout', // Timer expired, force advance
     UNSUBMIT: 'unsubmit', // Player undoes submission
+    SUBMIT_SKIP_READY: 'submit_skip_ready', // Player ready during odd-player skip round
 } as const;
 
 export type SocketEvent = typeof SOCKET_EVENTS[keyof typeof SOCKET_EVENTS];
